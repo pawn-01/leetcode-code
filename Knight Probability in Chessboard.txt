@@ -1,0 +1,45 @@
+class Solution {
+public:
+    unordered_map<string,double> mp;
+    bool isvalid(int r , int c , int n){
+        if(r>=0 and c>=0 and r<n and c<n){
+            return true;
+        }
+        return false;
+    }
+    double func(int n, int k , int r , int c){
+        string s = to_string(k)+"->"+to_string(r)+"->"+to_string(c);
+        if(k==0 and isvalid(r,c,n)){
+            mp[s] = 1;
+            return 1;
+        }
+        
+        if(mp.find(s)!=mp.end()){
+            return mp[s];
+        } 
+        
+        int a[4] = {-2,-1,1,2};
+        int b[4] = {-2,-1,1,2};
+        
+        double p = 0;
+            
+         for(int i = 0 ; i<4 ; i++){
+             for(int j = 0 ; j<4 ; j++){
+                 if(abs(a[i])!=abs(b[j])){
+                     int r1 = r+a[i];
+                     int c1 = c+b[j];
+                     if(isvalid(r1,c1,n)){
+                       p += func(n,k-1,r1,c1)/8.0;   
+                     }
+                 }
+             }
+         }
+        return mp[s] = p;
+    }
+    
+    double knightProbability(int n, int k, int row, int col) {
+         if(k==0) return 1;
+         double count = 0;
+         return func(n,k,row,col);
+    }
+};
