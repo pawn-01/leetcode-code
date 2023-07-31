@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int ans = INT_MAX;
+    void func(vector<int>& cookies , int i , vector<int> stud){
+        int n = stud.size();
+        
+         if(i==cookies.size()){
+             int a = INT_MIN;
+             for(int j = 0 ; j<n ; j++){
+                 a = max(stud[j],a);
+             }
+             ans = min(ans,a);
+             return;
+         }
+        
+        for(int j = 0 ; j<n ; j++){
+             stud[j] += cookies[i];
+             func(cookies,i+1,stud);
+             stud[j] -= cookies[i];
+        }
+    }
+    int distributeCookies(vector<int>& cookies, int k) {
+        if(k==8){
+             int a = INT_MIN;
+             for(int j = 0 ; j<cookies.size() ; j++){
+                 a = max(cookies[j],a);
+             }
+            return a;
+        }
+        vector<int> student(k,0);
+        func(cookies,0,student);
+        return ans;
+    }
+};
