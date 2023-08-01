@@ -1,0 +1,21 @@
+class Solution {
+public:
+    void func(vector<vector<int>>& ans, vector<int> comb , int k , int i , int n){
+        if(i==comb.size()){
+            ans.push_back(comb);
+            return;
+        }
+        
+        for(int j = k ; j<=n ; j++){
+            comb[i] += j;
+            func(ans,comb,j+1,i+1,n);
+            comb[i] -= j;
+        }
+    }
+    vector<vector<int>> combine(int n, int k) {
+          vector<vector<int>> ans;
+          vector<int> comb(k,0);
+          func(ans,comb,1,0,n);
+          return ans;
+    }
+};
