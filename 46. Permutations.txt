@@ -1,0 +1,27 @@
+class Solution {
+public:
+    void solve(vector<int>& nums, vector<int> perm , vector<vector<int>>& ans,int i){
+        if(i==nums.size()){
+            ans.push_back(perm);
+            return;
+        }
+        
+         for(int k = 0 ; k<nums.size() ; k++){
+              if(nums[k]!=-100){
+                   perm[i] += nums[k];
+                   int a = nums[k];
+                   nums[k] = -100;
+                   solve(nums,perm,ans,i+1);
+                   perm[i] -= a;
+                   nums[k] = a;
+              }
+         }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> perm(n,0);
+        vector<vector<int>> ans;
+        solve(nums,perm,ans,0);
+        return ans;
+    }
+};
