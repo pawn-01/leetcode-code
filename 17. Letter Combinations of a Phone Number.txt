@@ -1,0 +1,27 @@
+vector<string> ph = {"#","#","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+
+class Solution {
+public:
+    void solve(vector<string>& ans, string& digits , int i, string s){
+        if(i==digits.size()){
+            ans.push_back(s);
+            return;
+        }
+        int n = digits[i]-'0';
+        for(int k = 0 ; k<ph[n].size() ; k++){
+             s += ph[n][k];
+             solve(ans,digits,i+1,s);
+             int n = s.size();
+             s.erase(n-1,1);
+        }
+    }
+    vector<string> letterCombinations(string digits) {
+         if(digits.size()==0) return {};
+         vector<string> ans;
+         solve(ans,digits,0,"");
+         return ans;
+    }
+};
+
+time complexity : o(4^n)
+space complexity : o(4^n)
