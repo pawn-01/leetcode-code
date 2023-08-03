@@ -1,0 +1,25 @@
+int mod = 1e9+7;
+vector<int> ph = {0,0,3,3,3,3,3,4,3,4};
+class Solution {
+public:
+    int solve(string& s , int i , vector<int>& dp){
+        if(i==s.size()){
+            return dp[i]=1;
+        }
+        
+       if(dp[i]!=-1) return dp[i];
+        
+       long count = 0;
+       for(int k = 0 ; k<ph[s[i]-'0'] and i+k<s.size() and s[i]==s[i+k]; k++){
+            count += solve(s,i+k+1,dp);
+            count %= mod;
+       }
+    
+      return dp[i] = count;
+    }
+    int countTexts(string pk) {
+        int n = pk.size();
+        vector<int> dp(n+1,-1);
+        return (solve(pk,0,dp)%mod);
+    }
+};
