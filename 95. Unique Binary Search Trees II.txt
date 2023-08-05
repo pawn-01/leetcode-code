@@ -1,0 +1,23 @@
+class Solution {
+public:
+    vector<TreeNode*> tree(int i, int n){
+        if(i>n) return {NULL};
+          vector<TreeNode*> ans;
+          for(int k = i ; k<=n ;k++){
+              vector<TreeNode*> left = tree(i,k-1);
+              vector<TreeNode*> right = tree(k+1,n);
+              for(auto x:left){
+                  for(auto y:right){
+                      TreeNode* root = new TreeNode(k);
+                      root->left = x;
+                      root->right = y;
+                      ans.push_back(root);
+                  }
+              }
+           }
+         return ans;
+    }
+    vector<TreeNode*> generateTrees(int n) {
+      return tree(1,n);
+    }
+};
