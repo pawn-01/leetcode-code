@@ -1,0 +1,21 @@
+const int mod = 1e9+7;
+class Solution {
+public:
+    long solve(int usedsong, int currpos, int& goal , int& n , int& k, vector<vector<int>>& dp){
+          if(currpos==goal){
+              if(usedsong!=n) return dp[usedsong][currpos] = 0;
+              return dp[usedsong][currpos]=1;
+          }
+          if(dp[usedsong][currpos]!=-1) return dp[usedsong][currpos];
+        
+          long op1 = (solve(usedsong+1,currpos+1,goal,n,k,dp)*max(0,n-usedsong))%mod;
+          long op2 = (solve(usedsong,currpos+1,goal,n,k,dp)*max(0,usedsong-k))%mod;
+          
+          return dp[usedsong][currpos] = (op1+op2)%mod;
+    }
+    
+    int numMusicPlaylists(int n, int goal, int k) {
+        vector<vector<int>> dp(101,vector<int>(101,-1));        
+        return solve(0,0,goal,n,k,dp)%mod;
+    }
+};
