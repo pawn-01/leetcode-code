@@ -1,0 +1,38 @@
+class Solution {
+public:
+    bool is_valid(vector<int>& nums , int mid , int p){
+        int prev = 0;
+        int count = 0;
+        for(int i = 1 ; i<nums.size() ; i++){
+            if(prev){
+                prev = 0;
+                continue;
+            }
+            else{
+                if((nums[i]-nums[i-1])<=mid){
+                    count++;
+                    prev++;
+             }
+          }
+        }   
+        return count>=p;
+    }
+    int minimizeMax(vector<int>& nums, int p) {
+        int n = nums.size();
+        sort(nums.begin(),nums.end());
+        int i = 0;
+        int j = nums[n-1]-nums[0];
+        int ans = -1;
+        while(i<=j){
+            int mid = i + (j-i)/2;
+            if(is_valid(nums,mid,p)){
+                ans = mid;
+                j = mid-1;
+            }
+            else{
+                i = mid+1;
+            }
+        }
+        return ans;
+    }
+};
