@@ -1,0 +1,44 @@
+class Solution {
+public:
+    bool is_valid(int i , int j , vector<string>& ans, int size){
+        for(int p = i-1 ; p>=0 ; p--){
+            if(ans[p][j]=='Q') return false;
+        }
+        
+       for(int p = i-1 , q = j-1 ; p>=0 and q>=0 ; p--,q--){
+           if(ans[p][q]=='Q')return false;
+       }
+        
+      for(int p = i-1 , q = j+1 ; p>=0 and q<size ; p--,q++){
+           if(ans[p][q]=='Q')return false;
+       }
+        
+        return true;
+    }
+    void solve(vector<vector<string>>& ans , int n , int i , int size, vector<string>& queen){
+         if(n==0){ 
+             ans.push_back(queen);
+             return ;
+         }
+
+         for(int k = 0 ; k<size ; k++){
+             cout<<i<<"ka "<<k<<endl;
+             if(i==0 or is_valid(i,k,queen,size)){   
+                     queen[i][k]='Q';
+                      cout<<queen[0]<<endl;
+                  solve(ans,n-1,i+1,size,queen);
+                    queen[i][k]='.';                  
+               }
+         }
+     }
+    vector<vector<string>> solveNQueens(int n) {
+        vector<vector<string>> ans;
+        string s;
+        for(int i = 0 ; i<n ; i++){
+            s+='.';
+        }
+         vector<string> queen(n,s);
+         solve(ans,n,0,n,queen);
+         return ans;
+    }
+};
