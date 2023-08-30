@@ -1,0 +1,39 @@
+typedef pair<string,double> x;
+class Solution {
+public:
+    void dfs(string s , string e , unordered_map<string,vector<x>>& mp, double marks , unordered_set<string>& vis , double& a){
+        vis.insert(s);
+        if(s==e){
+            a = marks;
+            return;
+        }
+        for(auto x : mp[s]){
+             if(vis.find(x.first)==vis.end()){
+                  dfs(x.first,e,mp,marks*x.second,vis,a);
+             } 
+        }
+    }
+    vector<double> calcEquation(vector<vector<string>>& eq, vector<double>& val, vector<vector<string>>& qu) {
+        unordered_map<string,vector<x>> mp;
+        unordered_set<string> vis;
+        for(int i = 0 ; i<eq.size() ; i++){
+            mp[eq[i][0]].push_back({eq[i][1],val[i]});
+            mp[eq[i][1]].push_back({eq[i][0],1/val[i]});
+        }
+        vector<double> ans;
+        for(auto x : qu){
+            double a = -1;
+            double temp = 1;
+            string s = x[0];
+            string e = x[1];
+            if(mp.find(s)==mp.end() or mp.find(e)==mp.end()){ 
+                ans.push_back(-1);
+                continue;
+            }
+               dfs(s,e,mp,temp,vis,a);
+               ans.push_back(a);
+               vis.clear();
+        }
+        return ans;
+    }
+};
