@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int longestSubstring(string s, int k) {
+        int n = s.size();
+        if(k<=1) return n;
+        unordered_map<char,int> mp;
+        vector<int> freq(26,0);
+        for(char x : s){
+            mp[x]++;
+        }
+        int i = 0;
+        // searching 1st charcter less than k frequrency
+        while(i<n and mp[s[i]]>=k) i++;
+        if(i>=n) return n;
+        int l1 = longestSubstring(s.substr(0,i),k);
+        // searching for 1st charcter greater or equal to k 
+        while(i<n and mp[s[i]]<k) i++;
+        int l2 = i<n?longestSubstring(s.substr(i),k):0;
+        return max(l1,l2);
+    }
+};
